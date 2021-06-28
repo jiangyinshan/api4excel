@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 # author: 赫本z
 # 基础包：接口测试的封装
+import ast
 
 import requests
 import core.log as log
@@ -26,9 +27,9 @@ def change_type(value):
         logging.error("类型问题 %s", e)
 
 
-def api(method, url, data, headers):
+def ResponseCodeCheck(method, url, data, headers):
     """
-    自定义一个接口测试的方法
+    检查接口响应码是否正常
     :param method: 请求类型
     :param url: 地址
     :param data: 数据
@@ -38,7 +39,11 @@ def api(method, url, data, headers):
     global results
     try:
         if method == ("post" or "POST"):
-            results = requests.post(url, data, headers=headers)
+            """
+            将字符串格式的data转成dict格式的请求体(ast.literal_eva)
+            """
+            results = requests.post(url, data=ast.literal_eval(data), headers=headers)
+
         if method == ("get" or "GET"):
             results = requests.get(url, data, headers=headers)
         # if method == "put":
@@ -55,7 +60,7 @@ def api(method, url, data, headers):
         logging.error("service is error", e)
 
 
-def content(method, url, data, headers):
+def ResponseContentCheck(method, url, data, headers):
     """
     请求response自己可以自定义检查结果
     :param method: 请求类型
@@ -81,3 +86,12 @@ def content(method, url, data, headers):
         return content
     except Exception as e:
         logging.error("请求失败 %s" % e)
+
+
+def pretty_print_POST(req):
+    print('{}\n{}\r\n{}\r\n\r\n{}'.format(
+        '-----------START-----------',
+        req.method + ' ' + req.url,
+        '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        req.body,
+    ))

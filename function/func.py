@@ -51,7 +51,7 @@ class ApiTest:
             testMethod = excel.get_content(sheet, i, cs.CASE_METHOD)
             testHeaders = eval(excel.get_content(sheet, i, cs.CASE_HEADERS))
             testCode = excel.get_content(sheet, i, cs.CASE_CODE)
-            actualCode = request.api(testMethod, testUrl, testData, testHeaders)
+            actualCode = request.ResponseCodeCheck(testMethod, testUrl, testData, testHeaders)
             expectCode = int(testCode)
             failResults = PrettyTable(["Number", "Method", "Url", "Data", "ActualCode", "ExpectCode"])
             failResults.align["Number"] = "l"
