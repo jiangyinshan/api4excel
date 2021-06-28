@@ -1,28 +1,32 @@
- # !/usr/bin/python
- # -*- coding: UTF-8 -*-
- # author: 赫本z
- # 基础包: excel的封装
+# !/usr/bin/python
+# -*- coding: UTF-8 -*-
+# author: 赫本z
+# 基础包: excel的封装
 
 import xlrd
+
 workbook = None
 
+
 def open_excel(path):
-     """
-     打开excel
-     :param path: 打开excel文件的位置
-     """
-     global workbook
-     if (workbook == None):
+    """
+    打开excel
+    :param path: 打开excel文件的位置
+    """
+    global workbook
+    if workbook is None:
         workbook = xlrd.open_workbook(path, on_demand=True)
 
+
 def get_sheet(sheetName):
-     """
-     获取页名
-     :param sheetName: 页名
-     :return: workbook
-     """
-     global workbook
-     return workbook.sheet_by_name(sheetName)
+    """
+    获取页名
+    :param sheetName: 页名
+    :return: workbook
+    """
+    global workbook
+    return workbook.sheet_by_name(sheetName)
+
 
 def get_rows(sheet):
     """
@@ -31,6 +35,7 @@ def get_rows(sheet):
     :return: 行数
     """
     return sheet.nrows
+
 
 def get_content(sheet, row, col):
     """
@@ -41,6 +46,7 @@ def get_content(sheet, row, col):
     :return:
     """
     return sheet.cell(row, col).value
+
 
 def release(path):
     """释放excel减少内存"""

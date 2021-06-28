@@ -52,7 +52,7 @@ class ApiTest:
             testHeaders = eval(excel.get_content(sheet, i, cs.CASE_HEADERS))
             testCode = excel.get_content(sheet, i, cs.CASE_CODE)
             actualCode = request.api(testMethod, testUrl, testData, testHeaders)
-            expectCode = str(int(testCode))
+            expectCode = int(testCode)
             failResults = PrettyTable(["Number", "Method", "Url", "Data", "ActualCode", "ExpectCode"])
             failResults.align["Number"] = "l"
             failResults.padding_width = 1
@@ -60,8 +60,8 @@ class ApiTest:
 
             if actualCode != expectCode:
                 logging.info("FailCase %s", testName)
-                print "FailureInfo"
-                print failResults
+                print("FailureInfo")
+                print(failResults)
                 fail += 1
             else:
                 logging.info("Number %s", testNumber)

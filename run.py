@@ -6,22 +6,27 @@
 import core.log as log
 from function.func import ApiTest
 
+host = "127.0.0.1"
+user = "root"
+password = "root"
+db = "ApiAutoTest"
+charset = "utf-8"
 func = ApiTest()
 logging = log.get_logger()
 
 """1.外部输入参数"""
 
 module = 'user'
-url = 'http://127.0.0.1:8080'
+url = 'https://api.kika.kikakeyboard.com'
 
 """2.根据module获取Sheet"""
 logging.info("-------------- Execute TestCases ---------------")
-sheet = func.get_excel_sheet(func.filename,  module)
+sheet = func.get_excel_sheet(func.filename, module)
 
-# """3.数据准备"""
-# logging.info("-------------- Prepare data through MysqlDB --------------")
-# sql = func.get_prepare_sql(sheet)
-# func.prepare_data(host=host, user=user, password=password, db=db, sql=sql)
+"""3.数据准备"""
+logging.info("-------------- Prepare data through MysqlDB --------------")
+sql = func.get_prepare_sql(sheet)
+func.prepare_data(host=host, user=user, password=password, db=db, sql=sql)
 
 """4.执行测试用例"""
 res = func.run_test(sheet, url)

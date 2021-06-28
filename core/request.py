@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 # author: 赫本z
 # 基础包：接口测试的封装
 
@@ -8,6 +8,7 @@ import core.log as log
 import json
 
 logging = log.get_logger()
+
 
 def change_type(value):
     """
@@ -21,11 +22,11 @@ def change_type(value):
         if isinstance(eval(value), dict):
             result = eval(json.dumps(value))
             return result
-    except Exception, e:
+    except Exception as e:
         logging.error("类型问题 %s", e)
 
 
-def api(method, url, data ,headers):
+def api(method, url, data, headers):
     """
     自定义一个接口测试的方法
     :param method: 请求类型
@@ -40,18 +41,17 @@ def api(method, url, data ,headers):
             results = requests.post(url, data, headers=headers)
         if method == ("get" or "GET"):
             results = requests.get(url, data, headers=headers)
-      # if method == "put":
-      #     results = requests.put(url, data, headers=headers)
-      # if method == "delete":
-      #     results = requests.delete(url, headers=headers)
-      # if method == "patch":
-      #     results == requests.patch(url, data, headers=headers)
-      # if method == "options":
-      #     results == requests.options(url, headers=headers)
-        response = results.json()
-        code = response.get("code")
+        # if method == "put":
+        #     results = requests.put(url, data, headers=headers)
+        # if method == "delete":
+        #     results = requests.delete(url, headers=headers)
+        # if method == "patch":
+        #     results == requests.patch(url, data, headers=headers)
+        # if method == "options":
+        #     results == requests.options(url, headers=headers)
+        code = results.status_code
         return code
-    except Exception, e:
+    except Exception as e:
         logging.error("service is error", e)
 
 
@@ -79,5 +79,5 @@ def content(method, url, data, headers):
         result = response.get("result")
         content = {"message": message, "result": result}
         return content
-    except Exception, e:
+    except Exception as e:
         logging.error("请求失败 %s" % e)

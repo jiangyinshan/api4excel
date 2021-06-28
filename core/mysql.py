@@ -6,9 +6,9 @@
 import pymysql.cursors
 import core.log as log
 
-
 logging = log.get_logger()
 conn = None
+
 
 def connect(host, user, password, db, charset='utf8'):
     """
@@ -21,7 +21,7 @@ def connect(host, user, password, db, charset='utf8'):
     :return: 链接
     """
     global conn
-    if conn == None:
+    if conn is None:
         conn = pymysql.connect(host=host,
                                user=user,
                                password=password,
@@ -44,7 +44,7 @@ def execute(sql):
         conn.commit()
         # 这里一定要写commit 不然提交的sql 都会被事务回滚
         return res
-    except Exception, e:
+    except Exception as e:
         logging.error("sql is empty or error %s" % e)
 
 
